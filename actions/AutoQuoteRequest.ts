@@ -1,5 +1,6 @@
 import {expect, Page} from "@playwright/test";
 import autoQuoteRequestLocators from "../locators/AutoQuoteRequestLocators";
+import {faker} from "@faker-js/faker";
 
 
 class AutoQuoteRequest {
@@ -12,12 +13,12 @@ class AutoQuoteRequest {
             .click();
     }
 
-    async fillQuoteRequestForm(firstName: string, lastName: string, email: string, phone: string, zip: string) {
-        await this.page.fill(autoQuoteRequestLocators.firstName, firstName);
-        await this.page.fill(autoQuoteRequestLocators.lastName, lastName);
-        await this.page.fill(autoQuoteRequestLocators.email, email);
-        await this.page.fill(autoQuoteRequestLocators.phone, phone);
-        await this.page.fill(autoQuoteRequestLocators.zip, zip);
+    async fillQuoteRequestForm() {
+        await this.page.fill(autoQuoteRequestLocators.firstName, faker.person.firstName());
+        await this.page.fill(autoQuoteRequestLocators.lastName, faker.person.lastName());
+        await this.page.fill(autoQuoteRequestLocators.email, faker.internet.email());
+        await this.page.fill(autoQuoteRequestLocators.phone, faker.phone.number());
+        await this.page.fill(autoQuoteRequestLocators.zip, faker.location.zipCode());
         await this.page.selectOption(autoQuoteRequestLocators.referringAgent, {label: 'Jane Smith'});
     }
 
@@ -26,6 +27,7 @@ class AutoQuoteRequest {
     }
 
     async verifyAutoQuoteRequestPage1of4() {
+        await this.page.waitForSelector(autoQuoteRequestLocators.subHeader);
         await expect(this.page.locator(autoQuoteRequestLocators.subHeader)).toHaveText("Step 1 of 4");
     }
 }

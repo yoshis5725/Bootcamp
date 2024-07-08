@@ -29,7 +29,7 @@ test.describe("Interrogating the Insurance Demo site", async () => {
 
         await commonActions.clickGetStartedButton();
         await autoQuoteRequestActions.clickAutoInsuranceButton();
-        await autoQuoteRequestActions.fillQuoteRequestForm("John", "Doe", "johndoe@gmail.com", "1234567890", "12345");
+        await autoQuoteRequestActions.fillQuoteRequestForm();
         await autoQuoteRequestActions.clickContinueStep2Button();
         await autoQuoteRequestActions.verifyAutoQuoteRequestPage1of4();
     });
